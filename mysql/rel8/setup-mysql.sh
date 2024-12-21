@@ -18,3 +18,6 @@ mysql --version
 sudo systemctl start mysqld
 sudo systemctl enable mysqld
 sudo systemctl status mysqld
+
+# Install git
+sudo dnf install -y git
