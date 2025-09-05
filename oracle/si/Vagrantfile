@@ -1,0 +1,67 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "oraclebase/oracle-9"
+  vm_name = "oel9"
+  config.vm.hostname = vm_name
+
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = vm_name
+    vb.memory = 3072
+    vb.cpus = 2
+
+    vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+    vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+
+    # Create and attach virtual disks
+    vb.customize ['createhd', '--filename', 'disk_u01.vdi', '--size', 204800]
+    vb.customize ['createhd', '--filename', 'disk_oradata.vdi', '--size', 102400]
+    vb.customize ['createhd', '--filename', 'disk_oraredo.vdi', '--size', 102400]
+    vb.customize ['createhd', '--filename', 'disk_orabackup.vdi', '--size', 102400]
+    vb.customize ['createhd', '--filename', 'disk_tmp.vdi', '--size', 30720] # New disk for /tmp
+
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', 'disk_u01.vdi']
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', 'disk_oradata.vdi']
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 3, '--device', 0, '--type', 'hdd', '--medium', 'disk_oraredo.vdi']
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 4, '--device', 0, '--type', 'hdd', '--medium', 'disk_orabackup.vdi']
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 5, '--device', 0, '--type', 'hdd', '--medium', 'disk_tmp.vdi'] # Attach /tmp disk
+
+    # Networking
+    config.vm.network "private_network", ip: "192.168.56.10"
+    config.vm.network "forwarded_port", guest: 1521, host: 1521, auto_correct: true
+
+    # Synced folder
+    config.vm.synced_folder "C:/Users/#{ENV['USERNAME']}/Downloads/VagrantShare", "/vagrant_share",
+                            SharedFoldersEnableSymlinksCreate: false
+  end
+
+  # Provisioning shell
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+    # Format and mount all extra disks
+    for i in b c d e f; do
+      DISK="/dev/sd${i}"
+      if [ -b "$DISK" ]; then
+        mkfs.xfs -f $DISK
+      fi
+    done
+
+    mkdir -p /u01 /oradata /oraredo /orabackup /tmpmnt
+
+    echo "/dev/sdb /u01 xfs defaults 0 0" >> /etc/fstab
+    echo "/dev/sdc /oradata xfs defaults 0 0" >> /etc/fstab
+    echo "/dev/sdd /oraredo xfs defaults 0 0" >> /etc/fstab
+    echo "/dev/sde /orabackup xfs defaults 0 0" >> /etc/fstab
+    echo "/dev/sdf /tmpmnt xfs defaults 0 0" >> /etc/fstab
+
+    mount -a
+
+    # Remount /tmp with bind (avoid stopping auditd)
+    if [ -d /tmpmnt ] && mountpoint -q /tmpmnt; then
+      rsync -aXS /tmp/ /tmpmnt/
+      mount --bind /tmpmnt /tmp
+      chmod 1777 /tmp
+    fi
+  SHELL
+end
