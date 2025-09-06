@@ -1,10 +1,10 @@
 # Vagrant Projects
-Just some Vagrant builds I  as my sandbox. Feel free to copy or fork this stuff.
+Just some Vagrant builds for learning purposes. Feel free to copy or fork this stuff.
 
 ## Quickstart
 1. [Download and install Vagrant](https://developer.hashicorp.com/vagrant/install?product_intent=vagrant)
 1. [Download and install VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-1. To verify the installation for the vagrant, execute the following vagrant command to see if it outputs the version <br/> `vagrant --version`
+1. verify the installation for the vagrant: `vagrant --version`
 1. Try out my [Builds](#Builds) 
 
 ## Builds
@@ -25,7 +25,7 @@ $ vagrant init ubuntu/trusty64
 $ vagrant up
 ```
 
-You can use Vagrant to manage the running virtual machine. Here are some useful Vagrant commands:
+You can use Vagrant to manage the running virtual machine. To view all Vagrant commands, just type `vagrant` on your terminal.
 
 * **vagrant up:** Launches the virtual machine and provisions it according to the settings in the Vagrantfile. This command will simply connect to the virtual machine if it is already running.
 
