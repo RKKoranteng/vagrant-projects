@@ -13,6 +13,9 @@ The project is created and maintained by [Richard Koranteng](https://rkkoranteng
 #### Changed
 - 2025-09-05 : update synched folder in oracle si vagrant build (Richard Koranteng)
 
+#### Fixed
+- 2025-09-27 : typo breaking link to vagrantfile (Richard Koranteng)
+
 #### Deleted
 - 2025-09-27 : remove GITHUB issue template (Richard Koranteng)
 - 2025-09-05 : mysql build (Richard Koranteng)
