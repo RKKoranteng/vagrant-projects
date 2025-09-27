@@ -1,9 +1,6 @@
 # Vagrant Projects
-Vagrant builds I use for training. You're welcome to use it for your own learning as well.
+Vagrant builds for training and learning, open for anyone to use.
 
 ## Required 
-1. [Download and install Vagrant](https://developer.hashicorp.com/vagrant/install?product_intent=vagrant)
-1. [Download and install VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-
-## Builds
-- [Oracle SI](orcacle\si)
+ * [Download and install Vagrant](https://developer.hashicorp.com/vagrant/install?product_intent=vagrant)
+ * [Download and install VirtualBox](https://www.virtualbox.org/wiki/Downloads)
