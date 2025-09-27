@@ -6,7 +6,7 @@ Vagrant build for Oracle Single Instance Database on OEL9, deployed on filesyste
  * [Download and install VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
 ## Usage
-1. Download the [Vagranfile](Vahrantfile)
+1. Download the [Vagranfile](Vagrantfile)
 1. Run `vagrant up` command 
 
 ## Directory Structure
