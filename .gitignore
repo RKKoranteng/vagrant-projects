@@ -7,4 +7,4 @@
 .github/workflows/*.yml
 
 # disable PR template
-.github/workflows/pull_request_template.md
+.github/pull_request_template.md
