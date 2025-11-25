@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ## Changes
 ### 2025.11-r1
 - 11.25 ref: update CHANGELOG framework
+- 11.25 ref: update LICENSE name
 
 ### 2025.08-r1
 - 09.27 del: remove GITHUB issue template 
