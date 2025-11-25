@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## To-do List
+- add: add documentation
+- add: vagrant build for data gaurd
+- add: vagrant build for rac
 
 ## Changes
 ### 2025.11-r1
