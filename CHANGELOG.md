@@ -1,23 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The project is created and maintained by [Richard Koranteng](https://rkkoranteng.com), and adheres to [Calendar Versioning](https://calver.org/).
+## To-do List
 
-## v2025.08.1
-#### Added
-- 2025-09-05 : ignore vbox virtual disk (Richard Koranteng)
-- 2025-09-05 : generate-changelog workflow (Richard Koranteng)
-- 2025-09-05 : oracle si vagrant build (Richard Koranteng)
-- 2025-09-05 : ignore any nested .vagrant dir (Richard Koranteng)
 
-#### Changed
-- 2025-09-05 : update synched folder in oracle si vagrant build (Richard Koranteng)
+## Changes
+### 2025.11-r1
+- 11.25 ref: update CHANGELOG framework
 
-#### Fixed
-- 2025-09-27 : typo breaking link to vagrantfile (Richard Koranteng)
-
-#### Deleted
-- 2025-09-27 : remove GITHUB issue template (Richard Koranteng)
-- 2025-09-05 : mysql build (Richard Koranteng)
-- 2025-09-05 : backstage build (Richard Koranteng)
+### 2025.08-r1
+- 09.27 del: remove GITHUB issue template 
+- 09.27 fix: typo breaking link to vagrantfile 
+- 09.05 ref: ignore vbox virtual disk 
+- 09.05 add: generate-changelog workflow 
+- 09.05 add: oracle si vagrant build 
+- 09.05 ref: ignore any nested .vagrant dir 
+- 09.05 ref: update synched folder in oracle si vagrant build 
+- 09.05 del: backstage build 
 
