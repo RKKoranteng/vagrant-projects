@@ -13,8 +13,9 @@ All notable changes to this project will be documented in this file.
 - 11.25 ref: disable all 
 - 11.25 ref: disable PR template
 - 11.25 fix: path for pr template (wrong path in gitignore)
-- 11.25 add: code of 
+- 11.25 add: code of conduct
 - 11.25 add: issue template
+- 11.25 add: contributing framework
 
 ### 2025.08-r1
 - 09.27 del: remove GITHUB issue template 
