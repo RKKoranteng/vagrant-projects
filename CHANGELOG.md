@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - 11.25 add: issue template
 - 11.25 add: contributing framework
 - 11.25 del: generate_changelog.yml (not sure why it still ran)
+- 11.25 del: pull_request_template (not sure why it's not ignored)
 
 ### 2025.08-r1
 - 09.27 del: remove GITHUB issue template 
