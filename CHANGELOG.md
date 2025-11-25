@@ -10,7 +10,8 @@ All notable changes to this project will be documented in this file.
 - 11.25 ref: rename LICENSE to adhere to rkkoranteng 
 - 11.25 ref: rename dir oracle
 - 11.25 ref: readme 
-- 11.25 ref: disable all workflows
+- 11.25 ref: disable all 
+- 11.25 ref: disable PR template
 
 ### 2025.08-r1
 - 09.27 del: remove GITHUB issue template 
