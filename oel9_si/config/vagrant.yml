@@ -1,0 +1,19 @@
+shared:
+  box: oraclebase/oracle-9
+  non_rotational: 'on'
+
+primary:
+  vm_name: oradev
+  memory: 3072
+  cpus: 2
+  public_ip: 192.168.56.10
+  disk_u01: ./primary_disk_u01.vdi
+  disk_oradata: ./primary_disk_oradata.vdi
+  disk_oraredo: ./primary_disk_oraredo.vdi
+  disk_orabackup: ./primary_disk_orabackup.vdi
+  disk_tmp: ./primary_disk_tmp.vdi
+  disk_u01_size: 204800
+  disk_oradata_size: 102400
+  disk_oraredo_size: 102400
+  disk_orabackup_size: 102400
+  disk_tmp_size: 30720

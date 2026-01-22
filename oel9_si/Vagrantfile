@@ -1,0 +1,87 @@
+# primary Vagrantfile
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+require 'yaml'
+
+# You might need this in the session.
+# export SSH_AUTH_SOCK=""
+
+# Variables
+params = YAML.load_file 'config/vagrant.yml'
+var_box                 = params['shared']['box']
+var_non_rotational      = params['shared']['non_rotational']
+var_vm_name             = params['primary']['vm_name']
+var_memory              = params['primary']['memory']
+var_cpus                = params['primary']['cpus']
+var_public_ip           = params['primary']['public_ip']
+var_disk_u01            = params['primary']['disk_u01']
+var_disk_oradata        = params['primary']['disk_oradata']
+var_disk_oraredo        = params['primary']['disk_oraredo']
+var_disk_orabackup      = params['primary']['disk_orabackup']
+var_disk_tmp            = params['primary']['disk_tmp']
+var_disk_u01_size       = params['primary']['disk_u01_size']
+var_disk_oradata_size   = params['primary']['disk_oradata_size']
+var_disk_oraredo_size   = params['primary']['disk_oraredo_size']
+var_disk_orabackup_size = params['primary']['disk_orabackup_size']
+var_disk_tmp_size       = params['primary']['disk_tmp_size']
+
+Vagrant.configure("2") do |config|
+  config.vm.box = var_box
+  config.vm.hostname = var_vm_name
+
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end  
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = var_memory
+    vb.cpus   = var_cpus
+    vb.name   = var_vm_name
+
+    vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+    vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]    
+
+    #vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', '0', '--nonrotational', var_non_rotational]
+    # Create and attach virtual disks
+    unless File.exist?(var_disk_u01)
+      vb.customize ['createhd', '--filename', var_disk_u01, '--size', var_disk_u01_size]
+    end
+
+    unless File.exist?(var_disk_oradata)
+      vb.customize ['createhd', '--filename', var_disk_oradata, '--size', var_disk_oradata_size]
+    end
+
+    unless File.exist?(var_disk_oraredo)
+      vb.customize ['createhd', '--filename', var_disk_oraredo, '--size', var_disk_oraredo_size]
+    end
+
+    unless File.exist?(var_disk_orabackup)
+      vb.customize ['createhd', '--filename', var_disk_orabackup, '--size', var_disk_orabackup_size]
+    end
+
+    unless File.exist?(var_disk_tmp)
+      vb.customize ['createhd', '--filename', var_disk_tmp, '--size', var_disk_tmp_size]
+    end
+
+    #vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', var_u01_disk, '--nonrotational', var_non_rotational]
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', var_disk_u01]
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', var_disk_oradata]
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 3, '--device', 0, '--type', 'hdd', '--medium', var_disk_oraredo]
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 4, '--device', 0, '--type', 'hdd', '--medium', var_disk_orabackup]
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 5, '--device', 0, '--type', 'hdd', '--medium', var_disk_tmp] 
+
+    # Networking
+    config.vm.network "private_network", ip: var_public_ip
+    config.vm.network "forwarded_port", guest: 1521, host: 1521, auto_correct: true
+
+    # Synced folder
+    config.vm.synced_folder "scripts", "/vagrant_scripts"
+    config.vm.synced_folder "C:/Users/#{ENV['USERNAME']}/Downloads/VagrantShare", "/software",
+                            SharedFoldersEnableSymlinksCreate: false                              
+  end
+
+  # Provisioning shell
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+    sh /vagrant_scripts/setup_os.sh
+  SHELL
+end
