@@ -3,7 +3,7 @@ shared:
   non_rotational: 'on'
 
 primary:
-  vm_name: oradev
+  vm_name: orcl
   memory: 3072
   cpus: 2
   public_ip: 192.168.56.10
