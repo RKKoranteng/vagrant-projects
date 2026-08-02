@@ -17,3 +17,4 @@ This project adheres to [Calendar Versioning](https://calver.org/).
 ## Released 
 
 - 2026.08.01 : add - changelog to track notable changes in the project
+- 2026.01.21 : fix - undefined method `exists?' for class File (NoMethodError). See
